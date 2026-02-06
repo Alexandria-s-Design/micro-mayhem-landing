@@ -3,893 +3,856 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Micro Mayhem - Where Biology Meets Boolean Logic</title>
+  <title>Micro Mayhem — Coming Soon</title>
   <meta name="description" content="Micro Mayhem is an educational game where students explore the immune system through Boolean logic. Coming soon for grades 5-8.">
-  <meta property="og:title" content="Micro Mayhem - Coming Soon">
-  <meta property="og:description" content="An educational immune system adventure game. Where Biology Meets Boolean Logic.">
+  <meta property="og:title" content="Micro Mayhem — Coming Soon">
+  <meta property="og:description" content="An educational immune system adventure. Where Biology Meets Boolean Logic.">
   <meta property="og:image" content="images/hero-title.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ============ RESET & BASE ============ */
+    /* ═══════════ RESET ═══════════ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg-deep: #0a0e1a;
-      --bg-dark: #0d1b2a;
-      --bg-card: #111d2e;
+      --bg: #0a0e1a;
+      --bg-mid: #0d1b2a;
       --cyan: #00f0ff;
-      --cyan-dim: #00a8b3;
       --teal: #00d4aa;
       --purple: #7c3aed;
-      --purple-light: #9b59b6;
+      --purple-soft: #9b59b6;
       --green: #4ade80;
       --gold: #ffc857;
-      --red-accent: #ff4757;
-      --text-primary: #e8f0fe;
-      --text-secondary: #8892a4;
-      --font-heading: 'Montserrat', sans-serif;
-      --font-body: 'Open Sans', sans-serif;
+      --white: #eaf1ff;
+      --dim: #5e6a7e;
+      --faint: rgba(255,255,255,0.06);
+      --heading: 'Montserrat', sans-serif;
+      --body: 'Open Sans', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
     body {
-      font-family: var(--font-body);
-      background: var(--bg-deep);
-      color: var(--text-primary);
+      font-family: var(--body);
+      background: var(--bg);
+      color: var(--white);
       overflow-x: hidden;
-      line-height: 1.6;
     }
 
-    /* ============ UTILITY ============ */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
+    /* ═══════════ GRAIN OVERLAY ═══════════ */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px;
     }
 
-    .section-label {
-      font-family: var(--font-heading);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 20px;
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, var(--cyan), var(--teal), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ============ HERO ============ */
+    /* ═══════════ HERO — FULL CINEMATIC ═══════════ */
     .hero {
       position: relative;
-      min-height: 100vh;
+      height: 100vh;
+      min-height: 600px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      align-items: flex-end;
       overflow: hidden;
     }
 
-    .hero-bg {
+    .hero-artwork {
       position: absolute;
       inset: 0;
       z-index: 0;
     }
 
-    .hero-bg img {
+    .hero-artwork img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      opacity: 0.35;
+      object-position: center 30%;
+      will-change: transform;
+      animation: heroZoom 20s ease-out forwards;
     }
 
-    .hero-bg::after {
+    @keyframes heroZoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1.0); }
+    }
+
+    .hero-artwork::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(10, 14, 26, 0.3) 0%,
-        rgba(10, 14, 26, 0.5) 40%,
-        rgba(10, 14, 26, 0.95) 100%
-      );
+      background:
+        linear-gradient(180deg,
+          rgba(10,14,26,0.15) 0%,
+          rgba(10,14,26,0.0) 25%,
+          rgba(10,14,26,0.0) 40%,
+          rgba(10,14,26,0.55) 70%,
+          rgba(10,14,26,0.97) 100%
+        ),
+        linear-gradient(90deg,
+          rgba(10,14,26,0.3) 0%,
+          transparent 30%,
+          transparent 70%,
+          rgba(10,14,26,0.3) 100%
+        );
     }
 
-    /* Particle canvas */
-    .particles {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .hero-content {
+    .hero-bottom {
       position: relative;
       z-index: 2;
-      padding: 40px 24px;
+      width: 100%;
+      padding: 0 clamp(24px, 5vw, 80px) 56px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
     }
 
-    .hero-logo {
-      max-width: min(600px, 90vw);
-      margin-bottom: 24px;
-      filter: drop-shadow(0 0 40px rgba(0, 240, 255, 0.3));
-      animation: float 6s ease-in-out infinite;
+    .hero-text {
+      max-width: 560px;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-
-    .coming-soon-badge {
-      display: inline-block;
-      padding: 10px 32px;
-      border: 2px solid var(--cyan);
-      border-radius: 50px;
-      font-family: var(--font-heading);
-      font-weight: 800;
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      letter-spacing: 4px;
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid rgba(0,240,255,0.25);
+      border-radius: 4px;
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--cyan);
-      animation: glowPulse 2s ease-in-out infinite;
       margin-bottom: 20px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(10,14,26,0.4);
+      animation: badgeFade 1.2s ease-out 0.4s both;
     }
 
-    @keyframes glowPulse {
-      0%, 100% {
-        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3), 0 0 30px rgba(0, 240, 255, 0.1);
-        text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 60px rgba(0, 240, 255, 0.2);
-        text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
-      }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--cyan); }
+      50% { opacity: 0.4; box-shadow: 0 0 12px var(--cyan); }
+    }
+
+    @keyframes badgeFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .hero-tagline {
-      font-family: var(--font-heading);
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-family: var(--heading);
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      animation: textReveal 1s ease-out 0.6s both;
+    }
+
+    .hero-tagline .accent {
+      background: linear-gradient(135deg, var(--cyan), var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes textReveal {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: var(--dim);
+      line-height: 1.6;
+      max-width: 420px;
+      animation: textReveal 1s ease-out 0.8s both;
+    }
+
+    .hero-scroll {
+      animation: textReveal 1s ease-out 1.2s both;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--heading);
+      font-size: 0.65rem;
       font-weight: 600;
-      font-style: italic;
-      color: var(--text-secondary);
-      margin-bottom: 32px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dim);
+      flex-shrink: 0;
     }
 
-    .hero-tagline em {
-      color: var(--teal);
-      font-style: normal;
+    .hero-scroll .line {
+      width: 40px;
+      height: 1px;
+      background: var(--dim);
     }
 
-    .scroll-hint {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      animation: bounce 2s ease-in-out infinite;
+    /* ═══════════ ABOUT + FEATURES (EDITORIAL SPLIT) ═══════════ */
+    .about {
+      padding: clamp(80px, 10vw, 120px) clamp(24px, 5vw, 80px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 100px);
+      max-width: 1320px;
+      margin: 0 auto;
+      align-items: start;
     }
 
-    .scroll-hint svg {
-      width: 28px;
-      height: 28px;
-      stroke: var(--cyan-dim);
-      opacity: 0.6;
+    .about-left h2 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(10px); }
+    .about-left h2 .line-teal {
+      background: linear-gradient(135deg, var(--teal), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* ============ TEASER SECTION ============ */
-    .teaser {
-      padding: 100px 0;
-      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
+    .about-left h2 .line-purple {
+      background: linear-gradient(135deg, var(--purple), var(--purple-soft));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .teaser-intro {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 60px;
+    .about-desc {
+      margin-top: 24px;
+      font-size: 1rem;
+      color: var(--dim);
+      line-height: 1.75;
+      max-width: 440px;
     }
 
-    .teaser-intro p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
-
-    .audience-badge {
+    .about-audience {
       display: inline-block;
-      margin-top: 16px;
-      padding: 6px 20px;
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      border-radius: 30px;
-      font-family: var(--font-heading);
-      font-size: 0.85rem;
-      font-weight: 600;
+      margin-top: 20px;
+      padding: 8px 18px;
+      background: rgba(0,240,255,0.05);
+      border: 1px solid rgba(0,240,255,0.12);
+      border-radius: 4px;
+      font-family: var(--heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
       color: var(--cyan);
     }
 
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(0, 240, 255, 0.08);
-      border-radius: 16px;
-      padding: 36px 28px;
-      text-align: center;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(0, 240, 255, 0.25);
-      box-shadow: 0 12px 40px rgba(0, 240, 255, 0.08);
-    }
-
-    .feature-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 20px;
-      border-radius: 16px;
+    /* Features — numbered editorial stack */
+    .features {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 8px;
     }
 
-    .feature-card:nth-child(1) .feature-icon { background: rgba(0, 212, 170, 0.12); }
-    .feature-card:nth-child(2) .feature-icon { background: rgba(124, 58, 237, 0.12); }
-    .feature-card:nth-child(3) .feature-icon { background: rgba(255, 200, 87, 0.12); }
+    .feat {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 16px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--faint);
+      align-items: start;
+    }
 
-    .feature-card h3 {
-      font-family: var(--font-heading);
-      font-size: 1.15rem;
+    .feat:first-child {
+      border-top: 1px solid var(--faint);
+    }
+
+    .feat-num {
+      font-family: var(--heading);
+      font-size: 0.7rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      letter-spacing: 1px;
+      padding-top: 2px;
     }
 
-    .feature-card:nth-child(1) h3 { color: var(--teal); }
-    .feature-card:nth-child(2) h3 { color: var(--purple-light); }
-    .feature-card:nth-child(3) h3 { color: var(--gold); }
+    .feat:nth-child(1) .feat-num { color: var(--teal); }
+    .feat:nth-child(2) .feat-num { color: var(--purple-soft); }
+    .feat:nth-child(3) .feat-num { color: var(--gold); }
 
-    .feature-card p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
+    .feat h3 {
+      font-family: var(--heading);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
 
-    /* ============ CHARACTERS ============ */
-    .characters {
-      padding: 100px 0;
-      background: var(--bg-dark);
+    .feat:nth-child(1) h3 { color: var(--teal); }
+    .feat:nth-child(2) h3 { color: var(--purple-soft); }
+    .feat:nth-child(3) h3 { color: var(--gold); }
+
+    .feat p {
+      font-size: 0.88rem;
+      color: var(--dim);
+      line-height: 1.65;
+    }
+
+    /* ═══════════ GAME WORLD — CINEMATIC ═══════════ */
+    .world {
       position: relative;
       overflow: hidden;
     }
 
-    .characters::before {
-      content: '';
-      position: absolute;
-      top: -200px;
-      left: -200px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .characters-header {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-
-    .character-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
-    }
-
-    .character-card {
-      background: linear-gradient(135deg, rgba(17, 29, 46, 0.8), rgba(10, 14, 26, 0.9));
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px;
-      padding: 36px 28px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-
-    .character-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .character-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      border-radius: 20px 20px 0 0;
-    }
-
-    .character-card:nth-child(1)::before { background: linear-gradient(90deg, var(--teal), var(--cyan)); }
-    .character-card:nth-child(1):hover { border-color: rgba(0, 212, 170, 0.3); }
-    .character-card:nth-child(2)::before { background: linear-gradient(90deg, var(--purple), var(--red-accent)); }
-    .character-card:nth-child(2):hover { border-color: rgba(124, 58, 237, 0.3); }
-    .character-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
-    .character-card:nth-child(3):hover { border-color: rgba(74, 222, 128, 0.3); }
-
-    .character-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-    }
-
-    .character-card:nth-child(1) .character-avatar {
-      background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(0, 240, 255, 0.1));
-      border: 2px solid rgba(0, 212, 170, 0.3);
-    }
-    .character-card:nth-child(2) .character-avatar {
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(255, 71, 87, 0.1));
-      border: 2px solid rgba(124, 58, 237, 0.3);
-    }
-    .character-card:nth-child(3) .character-avatar {
-      background: linear-gradient(135deg, rgba(74, 222, 128, 0.15), rgba(0, 240, 255, 0.1));
-      border: 2px solid rgba(74, 222, 128, 0.3);
-    }
-
-    .character-name {
-      font-family: var(--font-heading);
-      font-size: 1.3rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .character-card:nth-child(1) .character-name { color: var(--teal); }
-    .character-card:nth-child(2) .character-name { color: var(--purple-light); }
-    .character-card:nth-child(3) .character-name { color: var(--green); }
-
-    .character-role {
-      font-family: var(--font-heading);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-    }
-
-    .character-desc {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    /* ============ GAME WORLD PREVIEW ============ */
-    .game-world {
-      padding: 100px 0;
-      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-deep) 100%);
-    }
-
-    .game-world-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .game-world-text h2 {
-      margin-bottom: 20px;
-    }
-
-    .game-world-text p {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .game-world-text .lore-highlight {
-      color: var(--purple-light);
-      font-weight: 600;
-      font-style: italic;
-    }
-
-    .game-world-img-wrap {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(124, 58, 237, 0.2);
-    }
-
-    .game-world-img-wrap img {
+    .world-img {
       width: 100%;
       display: block;
-      transition: transform 0.5s ease;
+      max-height: 75vh;
+      object-fit: cover;
+      object-position: center 40%;
     }
 
-    .game-world-img-wrap:hover img {
-      transform: scale(1.03);
-    }
-
-    .game-world-img-wrap::after {
-      content: '';
+    .world-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 60%, rgba(10, 14, 26, 0.6) 100%);
+      background:
+        linear-gradient(180deg, var(--bg) 0%, transparent 18%),
+        linear-gradient(180deg, transparent 55%, var(--bg) 100%),
+        linear-gradient(90deg, rgba(10,14,26,0.85) 0%, transparent 45%);
       pointer-events: none;
     }
 
-    /* ============ SIGNUP / CTA ============ */
-    .signup {
-      padding: 100px 0;
-      background: var(--bg-deep);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .signup::before {
-      content: '';
+    .world-text {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.04) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .signup-inner {
-      text-align: center;
-      max-width: 560px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 80px);
+      max-width: 1320px;
       margin: 0 auto;
-      position: relative;
-      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
     }
 
-    .signup-inner .section-title {
+    .world-lore h2 {
+      font-family: var(--heading);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
       margin-bottom: 12px;
     }
 
-    .signup-inner p {
-      color: var(--text-secondary);
-      margin-bottom: 36px;
-      font-size: 1.05rem;
+    .world-lore p {
+      font-size: 0.92rem;
+      color: var(--dim);
+      line-height: 1.7;
     }
 
-    .signup-form {
-      display: flex;
-      gap: 12px;
-      max-width: 480px;
+    .world-lore .lore-em {
+      color: var(--purple-soft);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    /* ═══════════ CHARACTERS — EDITORIAL STRIP ═══════════ */
+    .cast {
+      padding: clamp(64px, 8vw, 100px) clamp(24px, 5vw, 80px);
+      max-width: 1320px;
       margin: 0 auto;
     }
 
-    .signup-form input[type="email"] {
-      flex: 1;
-      padding: 14px 20px;
-      background: var(--bg-card);
-      border: 1px solid rgba(0, 240, 255, 0.15);
-      border-radius: 12px;
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .signup-form input[type="email"]::placeholder {
-      color: var(--text-secondary);
-    }
-
-    .signup-form input[type="email"]:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.15);
-    }
-
-    .signup-form button {
-      padding: 14px 28px;
-      background: linear-gradient(135deg, var(--gold), #e6a800);
-      border: none;
-      border-radius: 12px;
-      font-family: var(--font-heading);
-      font-size: 0.95rem;
+    .cast-label {
+      font-family: var(--heading);
+      font-size: 0.65rem;
       font-weight: 700;
-      color: var(--bg-deep);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 40px;
+    }
+
+    .cast-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--faint);
+    }
+
+    .cast-member {
+      padding: 32px 32px 32px 0;
+      border-right: 1px solid var(--faint);
+      position: relative;
+    }
+
+    .cast-member:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .cast-member:not(:first-child) {
+      padding-left: 32px;
+    }
+
+    .cast-name {
+      font-family: var(--heading);
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+
+    .cast-member:nth-child(1) .cast-name { color: var(--teal); }
+    .cast-member:nth-child(2) .cast-name { color: var(--purple-soft); }
+    .cast-member:nth-child(3) .cast-name { color: var(--green); }
+
+    .cast-role {
+      font-family: var(--heading);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 14px;
+    }
+
+    .cast-bio {
+      font-size: 0.88rem;
+      color: var(--dim);
+      line-height: 1.65;
+    }
+
+    /* ═══════════ SIGNUP CTA ═══════════ */
+    .cta {
+      padding: clamp(64px, 8vw, 100px) clamp(24px, 5vw, 80px);
+      text-align: center;
+      position: relative;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 64px;
+      background: linear-gradient(180deg, transparent, var(--faint));
+    }
+
+    .cta h2 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .cta h2 span {
+      background: linear-gradient(135deg, var(--gold), #e6a800);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-sub {
+      color: var(--dim);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .cta-form:focus-within {
+      border-color: rgba(0,240,255,0.35);
+      box-shadow: 0 0 0 3px rgba(0,240,255,0.06);
+    }
+
+    .cta-form input {
+      flex: 1;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.03);
+      border: none;
+      color: var(--white);
+      font-family: var(--body);
+      font-size: 0.92rem;
+      outline: none;
+    }
+
+    .cta-form input::placeholder {
+      color: var(--dim);
+    }
+
+    .cta-form button {
+      padding: 16px 28px;
+      background: var(--gold);
+      border: none;
+      font-family: var(--heading);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--bg);
       cursor: pointer;
       white-space: nowrap;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      transition: background 0.2s ease;
     }
 
-    .signup-form button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(255, 200, 87, 0.3);
+    .cta-form button:hover {
+      background: #e6b347;
     }
 
-    .signup-form button:active {
-      transform: translateY(0);
+    .cta-note {
+      margin-top: 14px;
+      font-size: 0.72rem;
+      color: var(--dim);
+      opacity: 0.6;
+      letter-spacing: 0.5px;
     }
 
-    .signup-note {
-      margin-top: 16px;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      opacity: 0.7;
-    }
-
-    .signup-success {
+    .cta-success {
       display: none;
-      padding: 20px;
-      background: rgba(0, 212, 170, 0.1);
-      border: 1px solid rgba(0, 212, 170, 0.3);
-      border-radius: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      border: 1px solid rgba(0,212,170,0.25);
+      border-radius: 8px;
       color: var(--teal);
-      font-weight: 600;
+      font-size: 0.92rem;
+      font-weight: 500;
     }
 
-    /* ============ FOOTER ============ */
-    .footer {
-      padding: 40px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      background: var(--bg-deep);
-    }
-
-    .footer-inner {
+    /* ═══════════ FOOTER ═══════════ */
+    .foot {
+      padding: 32px clamp(24px, 5vw, 80px);
+      border-top: 1px solid var(--faint);
+      max-width: 1320px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
       flex-wrap: wrap;
-      gap: 16px;
     }
 
-    .footer-brand {
-      font-family: var(--font-heading);
-      font-size: 0.85rem;
+    .foot-brand {
+      font-family: var(--heading);
+      font-size: 0.72rem;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--dim);
+      letter-spacing: 0.5px;
     }
 
-    .footer-brand span {
+    .foot-brand strong {
       color: var(--teal);
+      font-weight: 700;
     }
 
-    .footer-socials {
-      display: flex;
-      gap: 16px;
-    }
-
-    .footer-socials a {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .foot-links {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: var(--text-secondary);
+      gap: 20px;
+    }
+
+    .foot-links a {
+      color: var(--dim);
       text-decoration: none;
-      transition: border-color 0.3s ease, color 0.3s ease;
+      display: flex;
+      transition: color 0.2s ease;
     }
 
-    .footer-socials a:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
+    .foot-links a:hover { color: var(--white); }
+
+    .foot-copy {
+      font-size: 0.68rem;
+      color: var(--dim);
+      opacity: 0.5;
     }
 
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      opacity: 0.6;
-      width: 100%;
-      text-align: center;
-      margin-top: 12px;
-    }
-
-    /* ============ SCROLL REVEAL ============ */
-    .reveal {
+    /* ═══════════ SCROLL ANIMATIONS ═══════════ */
+    .fade-in {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .reveal.visible {
+    .fade-in.vis {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ============ RESPONSIVE ============ */
-    @media (max-width: 768px) {
-      .game-world-inner {
+    .stagger-1 { transition-delay: 0.05s; }
+    .stagger-2 { transition-delay: 0.12s; }
+    .stagger-3 { transition-delay: 0.19s; }
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media (max-width: 900px) {
+      .about {
         grid-template-columns: 1fr;
+        gap: 48px;
       }
 
-      .game-world-img-wrap {
-        order: -1;
-      }
-
-      .signup-form {
-        flex-direction: column;
-      }
-
-      .signup-form button {
-        width: 100%;
-      }
-
-      .character-grid {
+      .world-text {
         grid-template-columns: 1fr;
-        max-width: 400px;
-        margin: 0 auto;
+        position: relative;
+        padding-top: 0;
       }
 
-      .footer-inner {
-        justify-content: center;
-        text-align: center;
+      .world-img {
+        max-height: 50vh;
+      }
+
+      .world-overlay {
+        background:
+          linear-gradient(180deg, var(--bg) 0%, transparent 15%),
+          linear-gradient(180deg, transparent 50%, var(--bg) 100%);
+      }
+
+      .cast-row {
+        grid-template-columns: 1fr;
+        border-top: none;
+      }
+
+      .cast-member {
+        border-right: none;
+        border-bottom: 1px solid var(--faint);
+        padding: 24px 0;
+      }
+
+      .cast-member:first-child {
+        border-top: 1px solid var(--faint);
+      }
+
+      .cast-member:not(:first-child) {
+        padding-left: 0;
+      }
+
+      .cast-member:last-child {
+        border-bottom: none;
       }
     }
 
-    @media (max-width: 480px) {
-      .feature-grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 600px) {
+      .hero-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 40px;
       }
 
-      .hero-logo {
-        max-width: 95vw;
+      .hero-scroll { display: none; }
+
+      .cta-form {
+        flex-direction: column;
+        border: none;
+        border-radius: 0;
+        gap: 12px;
+      }
+
+      .cta-form input {
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px;
+      }
+
+      .cta-form button {
+        border-radius: 8px;
+        padding: 16px;
+      }
+
+      .foot {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- ==================== HERO ==================== -->
-  <section class="hero" id="home">
-    <div class="hero-bg">
-      <img src="images/hero-title.png" alt="Micro Mayhem artwork featuring Dr. Maya, The Professor, and Byte the robot exploring a cellular world">
+  <!-- ══════ HERO ══════ -->
+  <section class="hero">
+    <div class="hero-artwork">
+      <img src="images/hero-title.png" alt="Micro Mayhem — featuring Dr. Maya, The Professor, and Byte exploring a cellular world with Boolean logic gates">
     </div>
-    <canvas class="particles" id="particles"></canvas>
-    <div class="hero-content">
-      <img src="images/hero-title.png" alt="Micro Mayhem" class="hero-logo">
-      <div class="coming-soon-badge">Coming Soon</div>
-      <p class="hero-tagline">Where <em>Biology</em> Meets <em>Boolean Logic</em></p>
-    </div>
-    <div class="scroll-hint" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
+    <div class="hero-bottom">
+      <div class="hero-text">
+        <div class="hero-badge">Coming Soon</div>
+        <h1 class="hero-tagline">Where <span class="accent">Biology</span> Meets<br><span class="accent">Boolean Logic</span></h1>
+        <p class="hero-sub">An educational adventure through the immune system. Solve logic-gate puzzles, battle microscopic invaders, and save the cell.</p>
+      </div>
+      <div class="hero-scroll">
+        <span class="line"></span>
+        Scroll
+      </div>
     </div>
   </section>
 
-  <!-- ==================== GAME TEASER ==================== -->
-  <section class="teaser" id="about">
-    <div class="container">
-      <div class="teaser-intro reveal">
-        <p class="section-label">About the Game</p>
-        <h2 class="section-title gradient-text">Learn Immunity. Master Logic. Save the Cell.</h2>
-        <p>Micro Mayhem is an educational adventure game where students explore the human immune system through the power of Boolean logic. Navigate microscopic worlds, solve logic-gate puzzles, and battle invaders threatening the body's defenses.</p>
-        <span class="audience-badge">Designed for Grades 5&ndash;8 &bull; Ages 11&ndash;14</span>
-      </div>
-      <div class="feature-grid">
-        <div class="feature-card reveal">
-          <div class="feature-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          </div>
+  <!-- ══════ ABOUT + FEATURES ══════ -->
+  <section class="about">
+    <div class="about-left fade-in">
+      <h2>
+        <span class="line-teal">Learn Immunity.</span><br>
+        <span class="line-purple">Master Logic.</span><br>
+        Save the Cell.
+      </h2>
+      <p class="about-desc">Micro Mayhem is an educational adventure where students explore the human immune system through the power of Boolean logic. Navigate microscopic worlds, wire together logic circuits, and protect the body from a mysterious threat.</p>
+      <span class="about-audience">Grades 5 – 8 &nbsp;/&nbsp; Ages 11 – 14</span>
+    </div>
+    <div class="features fade-in stagger-1">
+      <div class="feat">
+        <span class="feat-num">01</span>
+        <div>
           <h3>Explore the Microscopic World</h3>
-          <p>Dive deep into cells, tissues, and the immune system. Discover how the body defends itself from pathogens in a vibrant, scientifically-grounded world.</p>
+          <p>Dive into cells, tissues, and the immune system. Discover how the body defends itself in a vibrant, scientifically-grounded world.</p>
         </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="8" height="4" rx="1"/><rect x="2" y="14" width="8" height="4" rx="1"/><rect x="14" y="10" width="8" height="4" rx="1"/><line x1="10" y1="8" x2="14" y2="12"/><line x1="10" y1="16" x2="14" y2="12"/></svg>
-          </div>
+      </div>
+      <div class="feat">
+        <span class="feat-num">02</span>
+        <div>
           <h3>Master Boolean Logic</h3>
-          <p>Learn AND, OR, and NOT gates through hands-on puzzles. Build computational thinking skills by wiring together logic circuits to solve real challenges.</p>
+          <p>Learn AND, OR, and NOT gates through hands-on puzzles. Build computational thinking by wiring logic circuits to solve real challenges.</p>
         </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffc857" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-          </div>
+      </div>
+      <div class="feat">
+        <span class="feat-num">03</span>
+        <div>
           <h3>Save the Cell!</h3>
-          <p>Guide Byte the robot through an action-packed adventure. Outsmart viruses, recruit immune allies, and protect the body from a mysterious threat.</p>
+          <p>Guide Byte the robot through an action-packed adventure. Outsmart viruses, recruit immune allies, and protect the body.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== CHARACTERS ==================== -->
-  <section class="characters" id="characters">
-    <div class="container">
-      <div class="characters-header reveal">
-        <p class="section-label">Meet the Team</p>
-        <h2 class="section-title gradient-text">Your Guides Through the Micro World</h2>
+  <!-- ══════ GAME WORLD ══════ -->
+  <section class="world">
+    <img class="world-img fade-in" src="images/game-world.png" alt="Byte the robot navigating a red cellular landscape toward a mysterious purple energy pyramid" loading="lazy">
+    <div class="world-overlay"></div>
+    <div class="world-text">
+      <div class="world-lore fade-in">
+        <h2>A World Inside<br>the Body</h2>
+        <p>Journey through breathtaking landscapes hidden within the human body — from crimson valleys of the bloodstream to towering cellular fortresses.</p>
       </div>
-      <div class="character-grid">
-        <div class="character-card reveal">
-          <div class="character-avatar">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3 class="character-name">Dr. Maya</h3>
-          <p class="character-role">Scientist &amp; Guide</p>
-          <p class="character-desc">A brilliant immunologist who shrinks you down to explore the microscopic world. She provides scientific context and guides your journey with wisdom, curiosity, and the occasional dad joke.</p>
-        </div>
-        <div class="character-card reveal">
-          <div class="character-avatar">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          </div>
-          <h3 class="character-name">The Professor</h3>
-          <p class="character-role">Mad Scientist &amp; Antagonist</p>
-          <p class="character-desc">A wild-haired eccentric who has discovered how to weaponize Boolean logic against the immune system. His chaotic experiments create the challenges you must overcome. Brilliant, unpredictable, and always one step ahead.</p>
-        </div>
-        <div class="character-card reveal">
-          <div class="character-avatar">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="10" cy="9" r="1.5" fill="#4ade80"/><circle cx="14" cy="9" r="1.5" fill="#4ade80"/><path d="M9 14h6"/><line x1="5" y1="17" x2="2" y2="20"/><line x1="19" y1="17" x2="22" y2="20"/></svg>
-          </div>
-          <h3 class="character-name">Byte</h3>
-          <p class="character-role">Robot Companion &amp; Mascot</p>
-          <p class="character-desc">Your trusty green robot sidekick who speaks in binary puns. Byte can interface with logic gates, scan for pathogens, and fits in the palm of a white blood cell. Small but mighty!</p>
-        </div>
+      <div class="fade-in stagger-1">
+        <p style="font-size:0.92rem;color:var(--dim);line-height:1.7;">
+          <span class="lore-em">Something ancient stirs at the heart of the immune system.</span> A mysterious energy pyramid has appeared, disrupting the delicate balance. Only Byte can reach it. Only you can solve the puzzles that stand in the way.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- ==================== GAME WORLD PREVIEW ==================== -->
-  <section class="game-world" id="world">
-    <div class="container">
-      <div class="game-world-inner">
-        <div class="game-world-text reveal">
-          <p class="section-label">Game World</p>
-          <h2 class="section-title gradient-text">A World Inside the Body</h2>
-          <p>Journey through breathtaking landscapes hidden within the human body. From the crimson valleys of the bloodstream to the towering structures of cellular fortresses, every environment is a scientifically-inspired adventure waiting to be explored.</p>
-          <p><span class="lore-highlight">Something ancient stirs at the heart of the immune system.</span> A mysterious energy pyramid has appeared deep within the body's defenses, disrupting the delicate balance that keeps us healthy. Only Byte can reach it. Only you can solve the logic puzzles that stand in the way.</p>
-        </div>
-        <div class="game-world-img-wrap reveal">
-          <img src="images/game-world.png" alt="Byte the robot exploring a vibrant red landscape inside the body, with a mysterious purple energy pyramid in the distance" loading="lazy">
-        </div>
+  <!-- ══════ CHARACTERS ══════ -->
+  <section class="cast">
+    <p class="cast-label fade-in">Meet the Cast</p>
+    <div class="cast-row">
+      <div class="cast-member fade-in stagger-1">
+        <h3 class="cast-name">Dr. Maya</h3>
+        <p class="cast-role">Scientist & Guide</p>
+        <p class="cast-bio">A brilliant immunologist who shrinks you down to explore the microscopic world. She guides your journey with wisdom, curiosity, and the occasional dad joke.</p>
+      </div>
+      <div class="cast-member fade-in stagger-2">
+        <h3 class="cast-name">The Professor</h3>
+        <p class="cast-role">Mad Scientist & Antagonist</p>
+        <p class="cast-bio">A wild-haired eccentric who weaponizes Boolean logic against the immune system. Brilliant, unpredictable, and always one step ahead.</p>
+      </div>
+      <div class="cast-member fade-in stagger-3">
+        <h3 class="cast-name">Byte</h3>
+        <p class="cast-role">Robot Companion</p>
+        <p class="cast-bio">Your trusty green robot sidekick. Byte interfaces with logic gates, scans for pathogens, and speaks exclusively in binary puns. Small but mighty.</p>
       </div>
     </div>
   </section>
 
-  <!-- ==================== EMAIL SIGNUP ==================== -->
-  <section class="signup" id="signup">
-    <div class="container">
-      <div class="signup-inner reveal">
-        <p class="section-label">Stay in the Loop</p>
-        <h2 class="section-title gradient-text">Be the First to Play</h2>
-        <p>Sign up to get notified when Micro Mayhem launches. Early subscribers get exclusive behind-the-scenes content and early access.</p>
-        <form class="signup-form" id="signupForm">
-          <input type="email" placeholder="Enter your email" required aria-label="Email address">
-          <button type="submit">Notify Me</button>
-        </form>
-        <p class="signup-note">No spam, ever. Unsubscribe anytime.</p>
-        <div class="signup-success" id="signupSuccess">
-          You're on the list! We'll let you know when Micro Mayhem is ready to play.
-        </div>
-      </div>
-    </div>
+  <!-- ══════ SIGNUP ══════ -->
+  <section class="cta">
+    <h2 class="fade-in">Be the First<br>to <span>Play</span></h2>
+    <p class="cta-sub fade-in stagger-1">Get notified when Micro Mayhem launches. Early subscribers get behind-the-scenes content and early access.</p>
+    <form class="cta-form fade-in stagger-2" id="signupForm">
+      <input type="email" placeholder="you@email.com" required aria-label="Email address">
+      <button type="submit">Notify Me</button>
+    </form>
+    <p class="cta-note fade-in stagger-2">No spam. Unsubscribe anytime.</p>
+    <div class="cta-success" id="signupSuccess">You're on the list — we'll be in touch.</div>
   </section>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <p class="footer-brand">A <span>ModelIt K-12</span> Game</p>
-        <div class="footer-socials">
-          <a href="#" aria-label="Twitter">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a href="#" aria-label="Instagram">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-          </a>
-          <a href="#" aria-label="YouTube">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.56 9.38.56 9.38.56s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
-          </a>
-        </div>
-        <p class="footer-copy">&copy; 2026 ModelIt K-12. All rights reserved.</p>
-      </div>
+  <!-- ══════ FOOTER ══════ -->
+  <footer class="foot">
+    <p class="foot-brand">A <strong>ModelIt K-12</strong> Game</p>
+    <div class="foot-links">
+      <a href="#" aria-label="X / Twitter">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.56 9.38.56 9.38.56s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
+      </a>
     </div>
+    <p class="foot-copy">&copy; 2026 ModelIt K-12</p>
   </footer>
 
   <script>
-    /* ============ PARTICLE ANIMATION ============ */
-    (function() {
-      const canvas = document.getElementById('particles');
-      const ctx = canvas.getContext('2d');
-      let particles = [];
-      let animId;
+    /* ═══ Scroll Reveal ═══ */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 
-      function resize() {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-      }
-
-      function createParticles() {
-        particles = [];
-        const count = Math.floor((canvas.width * canvas.height) / 15000);
-        for (let i = 0; i < count; i++) {
-          particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            r: Math.random() * 2 + 0.5,
-            dx: (Math.random() - 0.5) * 0.3,
-            dy: (Math.random() - 0.5) * 0.3,
-            opacity: Math.random() * 0.5 + 0.1,
-            color: ['#00f0ff', '#00d4aa', '#7c3aed', '#4ade80'][Math.floor(Math.random() * 4)]
-          });
-        }
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.globalAlpha = p.opacity;
-          ctx.fill();
-          p.x += p.dx;
-          p.y += p.dy;
-          if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    /* ═══ Parallax on hero artwork (subtle) ═══ */
+    const heroImg = document.querySelector('.hero-artwork img');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          if (y < window.innerHeight) {
+            heroImg.style.transform = `scale(${1 + y * 0.0001}) translateY(${y * 0.25}px)`;
+          }
+          ticking = false;
         });
-        ctx.globalAlpha = 1;
-        animId = requestAnimationFrame(draw);
+        ticking = true;
       }
+    });
 
-      resize();
-      createParticles();
-      draw();
-      window.addEventListener('resize', () => { resize(); createParticles(); });
-    })();
-
-    /* ============ SCROLL REVEAL ============ */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    /* ============ FORM HANDLER ============ */
+    /* ═══ Form ═══ */
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const email = this.querySelector('input[type="email"]').value;
-      // Store locally for now - connect to Mailchimp/ConvertKit later
-      console.log('Signup email:', email);
+      const email = this.querySelector('input').value;
+      console.log('Signup:', email);
       this.style.display = 'none';
-      document.querySelector('.signup-note').style.display = 'none';
+      document.querySelector('.cta-note').style.display = 'none';
       document.getElementById('signupSuccess').style.display = 'block';
     });
   </script>
