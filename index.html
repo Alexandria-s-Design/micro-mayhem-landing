@@ -10,7 +10,7 @@
   <meta property="og:image" content="images/hero-title.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&family=Noto+Sans+SC:wght@400;500;700;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     /* ═══════════ RESET ═══════════ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,6 +40,21 @@
       overflow-x: hidden;
     }
 
+    html[lang="zh"] body,
+    html[lang="zh"] .cast-name,
+    html[lang="zh"] .cast-role,
+    html[lang="zh"] .cast-bio,
+    html[lang="zh"] h1, html[lang="zh"] h2, html[lang="zh"] h3,
+    html[lang="zh"] .hero-badge,
+    html[lang="zh"] .about-audience,
+    html[lang="zh"] .feat-num,
+    html[lang="zh"] .cta-form button,
+    html[lang="zh"] .cast-label,
+    html[lang="zh"] .hero-scroll,
+    html[lang="zh"] .foot-brand {
+      font-family: 'Noto Sans SC', 'Montserrat', sans-serif;
+    }
+
     /* ═══════════ GRAIN OVERLAY ═══════════ */
     body::after {
       content: '';
@@ -51,6 +66,46 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 200px;
+    }
+
+    /* ═══════════ LANGUAGE SWITCHER ═══════════ */
+    .lang-nav {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 2px;
+      padding: 4px;
+      background: rgba(10,14,26,0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+      animation: badgeFade 1s ease-out 1s both;
+    }
+
+    .lang-nav button {
+      background: none;
+      border: none;
+      padding: 7px 14px;
+      font-family: var(--heading);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--dim);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: color 0.25s ease, background 0.25s ease;
+    }
+
+    .lang-nav button:hover:not(.active) {
+      color: var(--white);
+    }
+
+    .lang-nav button.active {
+      background: rgba(0,240,255,0.1);
+      color: var(--cyan);
     }
 
     /* ═══════════ HERO — FULL CINEMATIC ═══════════ */
@@ -114,9 +169,7 @@
       gap: 32px;
     }
 
-    .hero-text {
-      max-width: 560px;
-    }
+    .hero-text { max-width: 600px; }
 
     .hero-badge {
       display: inline-flex;
@@ -131,7 +184,7 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--cyan);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       background: rgba(10,14,26,0.4);
@@ -157,6 +210,26 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* Translated game title — hidden in EN, shown in ES/ZH */
+    .hero-game-title {
+      display: none;
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--cyan), var(--teal), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textReveal 1s ease-out 0.5s both;
+    }
+
+    html:not([lang="en"]) .hero-game-title {
+      display: block;
+    }
+
     .hero-tagline {
       font-family: var(--heading);
       font-size: clamp(1.6rem, 3.5vw, 2.8rem);
@@ -164,6 +237,20 @@
       line-height: 1.15;
       letter-spacing: -0.02em;
       animation: textReveal 1s ease-out 0.6s both;
+    }
+
+    /* When translated title is showing, make tagline smaller */
+    html:not([lang="en"]) .hero-tagline {
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--dim);
+      letter-spacing: 0;
+    }
+
+    html:not([lang="en"]) .hero-tagline .accent {
+      -webkit-text-fill-color: unset;
+      background: none;
+      color: var(--teal);
     }
 
     .hero-tagline .accent {
@@ -183,7 +270,7 @@
       font-size: 0.95rem;
       color: var(--dim);
       line-height: 1.6;
-      max-width: 420px;
+      max-width: 480px;
       animation: textReveal 1s ease-out 0.8s both;
     }
 
@@ -264,7 +351,6 @@
       color: var(--cyan);
     }
 
-    /* Features — numbered editorial stack */
     .features {
       display: flex;
       flex-direction: column;
@@ -281,9 +367,7 @@
       align-items: start;
     }
 
-    .feat:first-child {
-      border-top: 1px solid var(--faint);
-    }
+    .feat:first-child { border-top: 1px solid var(--faint); }
 
     .feat-num {
       font-family: var(--heading);
@@ -367,10 +451,16 @@
       line-height: 1.7;
     }
 
-    .world-lore .lore-em {
+    .lore-em {
       color: var(--purple-soft);
       font-style: italic;
       font-weight: 500;
+    }
+
+    .world-rhs {
+      font-size: 0.92rem;
+      color: var(--dim);
+      line-height: 1.7;
     }
 
     /* ═══════════ CHARACTERS — EDITORIAL STRIP ═══════════ */
@@ -466,7 +556,7 @@
       margin-bottom: 12px;
     }
 
-    .cta h2 span {
+    .cta h2 .gold {
       background: linear-gradient(135deg, var(--gold), #e6a800);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -499,7 +589,7 @@
       box-shadow: 0 0 0 3px rgba(0,240,255,0.06);
     }
 
-    .cta-form input {
+    .cta-form input[type="email"] {
       flex: 1;
       padding: 16px 20px;
       background: rgba(255,255,255,0.03);
@@ -510,9 +600,7 @@
       outline: none;
     }
 
-    .cta-form input::placeholder {
-      color: var(--dim);
-    }
+    .cta-form input[type="email"]::placeholder { color: var(--dim); }
 
     .cta-form button {
       padding: 16px 28px;
@@ -529,9 +617,7 @@
       transition: background 0.2s ease;
     }
 
-    .cta-form button:hover {
-      background: #e6b347;
-    }
+    .cta-form button:hover { background: #e6b347; }
 
     .cta-note {
       margin-top: 14px;
@@ -574,10 +660,7 @@
       letter-spacing: 0.5px;
     }
 
-    .foot-brand strong {
-      color: var(--teal);
-      font-weight: 700;
-    }
+    .foot-brand strong { color: var(--teal); font-weight: 700; }
 
     .foot-links {
       display: flex;
@@ -608,10 +691,7 @@
                   transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .fade-in.vis {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in.vis { opacity: 1; transform: translateY(0); }
 
     .stagger-1 { transition-delay: 0.05s; }
     .stagger-2 { transition-delay: 0.12s; }
@@ -619,10 +699,7 @@
 
     /* ═══════════ RESPONSIVE ═══════════ */
     @media (max-width: 900px) {
-      .about {
-        grid-template-columns: 1fr;
-        gap: 48px;
-      }
+      .about { grid-template-columns: 1fr; gap: 48px; }
 
       .world-text {
         grid-template-columns: 1fr;
@@ -630,9 +707,7 @@
         padding-top: 0;
       }
 
-      .world-img {
-        max-height: 50vh;
-      }
+      .world-img { max-height: 50vh; }
 
       .world-overlay {
         background:
@@ -651,17 +726,9 @@
         padding: 24px 0;
       }
 
-      .cast-member:first-child {
-        border-top: 1px solid var(--faint);
-      }
-
-      .cast-member:not(:first-child) {
-        padding-left: 0;
-      }
-
-      .cast-member:last-child {
-        border-bottom: none;
-      }
+      .cast-member:first-child { border-top: 1px solid var(--faint); }
+      .cast-member:not(:first-child) { padding-left: 0; }
+      .cast-member:last-child { border-bottom: none; }
     }
 
     @media (max-width: 600px) {
@@ -673,6 +740,8 @@
 
       .hero-scroll { display: none; }
 
+      .lang-nav { top: 12px; right: 12px; }
+
       .cta-form {
         flex-direction: column;
         border: none;
@@ -680,7 +749,7 @@
         gap: 12px;
       }
 
-      .cta-form input {
+      .cta-form input[type="email"] {
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 8px;
       }
@@ -701,6 +770,13 @@
 </head>
 <body>
 
+  <!-- ══════ LANGUAGE SWITCHER ══════ -->
+  <nav class="lang-nav" aria-label="Language">
+    <button class="active" data-lang="en">EN</button>
+    <button data-lang="es">ES</button>
+    <button data-lang="zh">中文</button>
+  </nav>
+
   <!-- ══════ HERO ══════ -->
   <section class="hero">
     <div class="hero-artwork">
@@ -708,13 +784,14 @@
     </div>
     <div class="hero-bottom">
       <div class="hero-text">
-        <div class="hero-badge">Coming Soon</div>
-        <h1 class="hero-tagline">Where <span class="accent">Biology</span> Meets<br><span class="accent">Boolean Logic</span></h1>
-        <p class="hero-sub">An educational adventure through the immune system. Solve logic-gate puzzles, battle microscopic invaders, and save the cell.</p>
+        <div class="hero-badge" data-i18n="badge">Coming Soon</div>
+        <div class="hero-game-title" data-i18n="gameTitle"></div>
+        <h1 class="hero-tagline" data-i18n-html="tagline">Where <span class="accent">Biology</span> Meets<br><span class="accent">Boolean Logic</span></h1>
+        <p class="hero-sub" data-i18n="heroSub">An educational adventure through the immune system. Solve logic-gate puzzles, battle microscopic invaders, and save the cell.</p>
       </div>
       <div class="hero-scroll">
         <span class="line"></span>
-        Scroll
+        <span data-i18n="scroll">Scroll</span>
       </div>
     </div>
   </section>
@@ -722,34 +799,34 @@
   <!-- ══════ ABOUT + FEATURES ══════ -->
   <section class="about">
     <div class="about-left fade-in">
-      <h2>
+      <h2 data-i18n-html="aboutHeading">
         <span class="line-teal">Learn Immunity.</span><br>
         <span class="line-purple">Master Logic.</span><br>
         Save the Cell.
       </h2>
-      <p class="about-desc">Micro Mayhem is an educational adventure where students explore the human immune system through the power of Boolean logic. Navigate microscopic worlds, wire together logic circuits, and protect the body from a mysterious threat.</p>
-      <span class="about-audience">Grades 5 – 8 &nbsp;/&nbsp; Ages 11 – 14</span>
+      <p class="about-desc" data-i18n="aboutDesc">Micro Mayhem is an educational adventure where students explore the human immune system through the power of Boolean logic. Navigate microscopic worlds, wire together logic circuits, and protect the body from a mysterious threat.</p>
+      <span class="about-audience" data-i18n="audience">Grades 5 – 8 &nbsp;/&nbsp; Ages 11 – 14</span>
     </div>
     <div class="features fade-in stagger-1">
       <div class="feat">
         <span class="feat-num">01</span>
         <div>
-          <h3>Explore the Microscopic World</h3>
-          <p>Dive into cells, tissues, and the immune system. Discover how the body defends itself in a vibrant, scientifically-grounded world.</p>
+          <h3 data-i18n="feat1Title">Explore the Microscopic World</h3>
+          <p data-i18n="feat1Desc">Dive into cells, tissues, and the immune system. Discover how the body defends itself in a vibrant, scientifically-grounded world.</p>
         </div>
       </div>
       <div class="feat">
         <span class="feat-num">02</span>
         <div>
-          <h3>Master Boolean Logic</h3>
-          <p>Learn AND, OR, and NOT gates through hands-on puzzles. Build computational thinking by wiring logic circuits to solve real challenges.</p>
+          <h3 data-i18n="feat2Title">Master Boolean Logic</h3>
+          <p data-i18n="feat2Desc">Learn AND, OR, and NOT gates through hands-on puzzles. Build computational thinking by wiring logic circuits to solve real challenges.</p>
         </div>
       </div>
       <div class="feat">
         <span class="feat-num">03</span>
         <div>
-          <h3>Save the Cell!</h3>
-          <p>Guide Byte the robot through an action-packed adventure. Outsmart viruses, recruit immune allies, and protect the body.</p>
+          <h3 data-i18n="feat3Title">Save the Cell!</h3>
+          <p data-i18n="feat3Desc">Guide Byte the robot through an action-packed adventure. Outsmart viruses, recruit immune allies, and protect the body.</p>
         </div>
       </div>
     </div>
@@ -761,57 +838,55 @@
     <div class="world-overlay"></div>
     <div class="world-text">
       <div class="world-lore fade-in">
-        <h2>A World Inside<br>the Body</h2>
-        <p>Journey through breathtaking landscapes hidden within the human body — from crimson valleys of the bloodstream to towering cellular fortresses.</p>
+        <h2 data-i18n-html="worldTitle">A World Inside<br>the Body</h2>
+        <p data-i18n="worldDesc">Journey through breathtaking landscapes hidden within the human body — from crimson valleys of the bloodstream to towering cellular fortresses.</p>
       </div>
-      <div class="fade-in stagger-1">
-        <p style="font-size:0.92rem;color:var(--dim);line-height:1.7;">
-          <span class="lore-em">Something ancient stirs at the heart of the immune system.</span> A mysterious energy pyramid has appeared, disrupting the delicate balance. Only Byte can reach it. Only you can solve the puzzles that stand in the way.
-        </p>
+      <div class="world-rhs fade-in stagger-1">
+        <p><span class="lore-em" data-i18n="loreLine">Something ancient stirs at the heart of the immune system.</span> <span data-i18n="loreDesc">A mysterious energy pyramid has appeared, disrupting the delicate balance. Only Byte can reach it. Only you can solve the puzzles that stand in the way.</span></p>
       </div>
     </div>
   </section>
 
   <!-- ══════ CHARACTERS ══════ -->
   <section class="cast">
-    <p class="cast-label fade-in">Meet the Cast</p>
+    <p class="cast-label fade-in" data-i18n="castLabel">Meet the Cast</p>
     <div class="cast-row">
       <div class="cast-member fade-in stagger-1">
-        <h3 class="cast-name">Dr. Maya</h3>
-        <p class="cast-role">Scientist & Guide</p>
-        <p class="cast-bio">A brilliant immunologist who shrinks you down to explore the microscopic world. She guides your journey with wisdom, curiosity, and the occasional dad joke.</p>
+        <h3 class="cast-name" data-i18n="char1Name">Dr. Maya</h3>
+        <p class="cast-role" data-i18n="char1Role">Scientist & Guide</p>
+        <p class="cast-bio" data-i18n="char1Bio">A brilliant immunologist who shrinks you down to explore the microscopic world. She guides your journey with wisdom, curiosity, and the occasional dad joke.</p>
       </div>
       <div class="cast-member fade-in stagger-2">
-        <h3 class="cast-name">The Professor</h3>
-        <p class="cast-role">Mad Scientist & Antagonist</p>
-        <p class="cast-bio">A wild-haired eccentric who weaponizes Boolean logic against the immune system. Brilliant, unpredictable, and always one step ahead.</p>
+        <h3 class="cast-name" data-i18n="char2Name">The Professor</h3>
+        <p class="cast-role" data-i18n="char2Role">Mad Scientist & Antagonist</p>
+        <p class="cast-bio" data-i18n="char2Bio">A wild-haired eccentric who weaponizes Boolean logic against the immune system. Brilliant, unpredictable, and always one step ahead.</p>
       </div>
       <div class="cast-member fade-in stagger-3">
-        <h3 class="cast-name">Byte</h3>
-        <p class="cast-role">Robot Companion</p>
-        <p class="cast-bio">Your trusty green robot sidekick. Byte interfaces with logic gates, scans for pathogens, and speaks exclusively in binary puns. Small but mighty.</p>
+        <h3 class="cast-name" data-i18n="char3Name">Byte</h3>
+        <p class="cast-role" data-i18n="char3Role">Robot Companion</p>
+        <p class="cast-bio" data-i18n="char3Bio">Your trusty green robot sidekick. Byte interfaces with logic gates, scans for pathogens, and speaks exclusively in binary puns. Small but mighty.</p>
       </div>
     </div>
   </section>
 
   <!-- ══════ SIGNUP ══════ -->
   <section class="cta">
-    <h2 class="fade-in">Be the First<br>to <span>Play</span></h2>
-    <p class="cta-sub fade-in stagger-1">Get notified when Micro Mayhem launches. Early subscribers get behind-the-scenes content and early access.</p>
+    <h2 class="fade-in" data-i18n-html="ctaHeading">Be the First<br>to <span class="gold">Play</span></h2>
+    <p class="cta-sub fade-in stagger-1" data-i18n="ctaSub">Get notified when Micro Mayhem launches. Early subscribers get behind-the-scenes content and early access.</p>
     <form class="cta-form fade-in stagger-2" id="signupForm" action="https://formsubmit.co/info@discoverycollective.com" method="POST">
       <input type="hidden" name="_subject" value="Micro Mayhem - New Signup">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="box">
-      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
-      <button type="submit">Notify Me</button>
+      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address" data-i18n-placeholder="emailPlaceholder">
+      <button type="submit" data-i18n="ctaBtn">Notify Me</button>
     </form>
-    <p class="cta-note fade-in stagger-2">No spam. Unsubscribe anytime.</p>
-    <div class="cta-success" id="signupSuccess">You're on the list — we'll be in touch.</div>
+    <p class="cta-note fade-in stagger-2" data-i18n="ctaNote">No spam. Unsubscribe anytime.</p>
+    <div class="cta-success" id="signupSuccess" data-i18n="ctaSuccess">You're on the list — we'll be in touch.</div>
   </section>
 
   <!-- ══════ FOOTER ══════ -->
   <footer class="foot">
-    <p class="foot-brand">A <strong>ModelIt K-12</strong> Game</p>
+    <p class="foot-brand" data-i18n-html="footBrand">A <strong>ModelIt K-12</strong> Game</p>
     <div class="foot-links">
       <a href="#" aria-label="X / Twitter">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -827,13 +902,175 @@
   </footer>
 
   <script>
-    /* ═══ Scroll Reveal ═══ */
+    /* ═══════════ TRANSLATIONS ═══════════ */
+    const T = {
+      en: {
+        badge: 'Coming Soon',
+        gameTitle: '',
+        tagline: 'Where <span class="accent">Biology</span> Meets<br><span class="accent">Boolean Logic</span>',
+        heroSub: 'An educational adventure through the immune system. Solve logic-gate puzzles, battle microscopic invaders, and save the cell.',
+        scroll: 'Scroll',
+        aboutHeading: '<span class="line-teal">Learn Immunity.</span><br><span class="line-purple">Master Logic.</span><br>Save the Cell.',
+        aboutDesc: 'Micro Mayhem is an educational adventure where students explore the human immune system through the power of Boolean logic. Navigate microscopic worlds, wire together logic circuits, and protect the body from a mysterious threat.',
+        audience: 'Grades 5 \u2013 8 \u00a0/\u00a0 Ages 11 \u2013 14',
+        feat1Title: 'Explore the Microscopic World',
+        feat1Desc: 'Dive into cells, tissues, and the immune system. Discover how the body defends itself in a vibrant, scientifically-grounded world.',
+        feat2Title: 'Master Boolean Logic',
+        feat2Desc: 'Learn AND, OR, and NOT gates through hands-on puzzles. Build computational thinking by wiring logic circuits to solve real challenges.',
+        feat3Title: 'Save the Cell!',
+        feat3Desc: 'Guide Byte the robot through an action-packed adventure. Outsmart viruses, recruit immune allies, and protect the body.',
+        worldTitle: 'A World Inside<br>the Body',
+        worldDesc: 'Journey through breathtaking landscapes hidden within the human body \u2014 from crimson valleys of the bloodstream to towering cellular fortresses.',
+        loreLine: 'Something ancient stirs at the heart of the immune system.',
+        loreDesc: 'A mysterious energy pyramid has appeared, disrupting the delicate balance. Only Byte can reach it. Only you can solve the puzzles that stand in the way.',
+        castLabel: 'Meet the Cast',
+        char1Name: 'Dr. Maya',
+        char1Role: 'Scientist & Guide',
+        char1Bio: 'A brilliant immunologist who shrinks you down to explore the microscopic world. She guides your journey with wisdom, curiosity, and the occasional dad joke.',
+        char2Name: 'The Professor',
+        char2Role: 'Mad Scientist & Antagonist',
+        char2Bio: 'A wild-haired eccentric who weaponizes Boolean logic against the immune system. Brilliant, unpredictable, and always one step ahead.',
+        char3Name: 'Byte',
+        char3Role: 'Robot Companion',
+        char3Bio: 'Your trusty green robot sidekick. Byte interfaces with logic gates, scans for pathogens, and speaks exclusively in binary puns. Small but mighty.',
+        ctaHeading: 'Be the First<br>to <span class="gold">Play</span>',
+        ctaSub: 'Get notified when Micro Mayhem launches. Early subscribers get behind-the-scenes content and early access.',
+        emailPlaceholder: 'you@email.com',
+        ctaBtn: 'Notify Me',
+        ctaNote: 'No spam. Unsubscribe anytime.',
+        ctaSuccess: "You\u2019re on the list \u2014 we\u2019ll be in touch.",
+        footBrand: 'A <strong>ModelIt K-12</strong> Game'
+      },
+      es: {
+        badge: 'Pr\u00f3ximamente',
+        gameTitle: 'Micro Caos',
+        tagline: 'Donde la <span class="accent">Biolog\u00eda</span> se Encuentra<br>con la <span class="accent">L\u00f3gica Booleana</span>',
+        heroSub: 'Una aventura educativa a trav\u00e9s del sistema inmunol\u00f3gico. Resuelve rompecabezas de puertas l\u00f3gicas, combate invasores microsc\u00f3picos y salva la c\u00e9lula.',
+        scroll: 'Desplazar',
+        aboutHeading: '<span class="line-teal">Aprende Inmunidad.</span><br><span class="line-purple">Domina la L\u00f3gica.</span><br>Salva la C\u00e9lula.',
+        aboutDesc: 'Micro Caos es una aventura educativa donde los estudiantes exploran el sistema inmunol\u00f3gico humano a trav\u00e9s del poder de la l\u00f3gica booleana. Navega mundos microsc\u00f3picos, conecta circuitos l\u00f3gicos y protege el cuerpo de una amenaza misteriosa.',
+        audience: 'Grados 5 \u2013 8 \u00a0/\u00a0 Edades 11 \u2013 14',
+        feat1Title: 'Explora el Mundo Microsc\u00f3pico',
+        feat1Desc: 'Sum\u00e9rgete en c\u00e9lulas, tejidos y el sistema inmunol\u00f3gico. Descubre c\u00f3mo el cuerpo se defiende en un mundo vibrante y cient\u00edficamente fundamentado.',
+        feat2Title: 'Domina la L\u00f3gica Booleana',
+        feat2Desc: 'Aprende las puertas AND, OR y NOT a trav\u00e9s de rompecabezas pr\u00e1cticos. Desarrolla el pensamiento computacional conectando circuitos l\u00f3gicos.',
+        feat3Title: '\u00a1Salva la C\u00e9lula!',
+        feat3Desc: 'Gu\u00eda al robot Byte en una aventura llena de acci\u00f3n. Vence a los virus, recluta aliados inmunol\u00f3gicos y protege el cuerpo.',
+        worldTitle: 'Un Mundo Dentro<br>del Cuerpo',
+        worldDesc: 'Viaja a trav\u00e9s de paisajes impresionantes ocultos dentro del cuerpo humano \u2014 desde valles carmes\u00ed del torrente sangu\u00edneo hasta imponentes fortalezas celulares.',
+        loreLine: 'Algo antiguo se agita en el coraz\u00f3n del sistema inmunol\u00f3gico.',
+        loreDesc: 'Una misteriosa pir\u00e1mide de energ\u00eda ha aparecido, alterando el delicado equilibrio. Solo Byte puede alcanzarla. Solo t\u00fa puedes resolver los rompecabezas que se interponen.',
+        castLabel: 'Conoce al Equipo',
+        char1Name: 'Dra. Maya',
+        char1Role: 'Cient\u00edfica y Gu\u00eda',
+        char1Bio: 'Una brillante inmun\u00f3loga que te encoge para explorar el mundo microsc\u00f3pico. Gu\u00eda tu viaje con sabidur\u00eda, curiosidad y alguno que otro chiste malo.',
+        char2Name: 'El Profesor',
+        char2Role: 'Cient\u00edfico Loco y Antagonista',
+        char2Bio: 'Un exc\u00e9ntrico de pelo alborotado que convierte la l\u00f3gica booleana en arma contra el sistema inmunol\u00f3gico. Brillante, impredecible y siempre un paso adelante.',
+        char3Name: 'Byte',
+        char3Role: 'Compa\u00f1ero Robot',
+        char3Bio: 'Tu fiel compa\u00f1ero robot verde. Byte se conecta con puertas l\u00f3gicas, escanea pat\u00f3genos y habla exclusivamente en juegos de palabras binarios. \u00a1Peque\u00f1o pero poderoso!',
+        ctaHeading: 'S\u00e9 el Primero<br>en <span class="gold">Jugar</span>',
+        ctaSub: 'Recibe una notificaci\u00f3n cuando Micro Caos se lance. Los primeros suscriptores obtienen contenido exclusivo y acceso anticipado.',
+        emailPlaceholder: 'tu@correo.com',
+        ctaBtn: 'Notif\u00edcame',
+        ctaNote: 'Sin spam. Cancela cuando quieras.',
+        ctaSuccess: '\u00a1Est\u00e1s en la lista! Te avisaremos cuando est\u00e9 listo.',
+        footBrand: 'Un Juego de <strong>ModelIt K-12</strong>'
+      },
+      zh: {
+        badge: '\u5373\u5c06\u63a8\u51fa',
+        gameTitle: '\u5fae\u89c2\u6df7\u6218',
+        tagline: '\u5f53<span class="accent">\u751f\u7269\u5b66</span>\u9047\u4e0a<br><span class="accent">\u5e03\u5c14\u903b\u8f91</span>',
+        heroSub: '\u4e00\u573a\u7a7f\u8d8a\u514d\u75ab\u7cfb\u7edf\u7684\u6559\u80b2\u5192\u9669\u3002\u89e3\u5f00\u903b\u8f91\u95e8\u8c1c\u9898\uff0c\u5bf9\u6297\u5fae\u89c2\u5165\u4fb5\u8005\uff0c\u62ef\u6551\u7ec6\u80de\u3002',
+        scroll: '\u6eda\u52a8',
+        aboutHeading: '<span class="line-teal">\u5b66\u4e60\u514d\u75ab\u3002</span><br><span class="line-purple">\u638c\u63e1\u903b\u8f91\u3002</span><br>\u62ef\u6551\u7ec6\u80de\u3002',
+        aboutDesc: '\u5fae\u89c2\u6df7\u6218\u662f\u4e00\u6b3e\u6559\u80b2\u5192\u9669\u6e38\u620f\uff0c\u5b66\u751f\u901a\u8fc7\u5e03\u5c14\u903b\u8f91\u7684\u529b\u91cf\u63a2\u7d22\u4eba\u4f53\u514d\u75ab\u7cfb\u7edf\u3002\u5728\u5fae\u89c2\u4e16\u754c\u4e2d\u5bfc\u822a\uff0c\u8fde\u63a5\u903b\u8f91\u7535\u8def\uff0c\u4fdd\u62a4\u8eab\u4f53\u514d\u53d7\u795e\u79d8\u5a01\u80c1\u3002',
+        audience: '5\u20138\u5e74\u7ea7 \u00a0/\u00a0 11\u201314\u5c81',
+        feat1Title: '\u63a2\u7d22\u5fae\u89c2\u4e16\u754c',
+        feat1Desc: '\u6df1\u5165\u7ec6\u80de\u3001\u7ec4\u7ec7\u548c\u514d\u75ab\u7cfb\u7edf\u3002\u5728\u4e00\u4e2a\u5145\u6ee1\u6d3b\u529b\u3001\u6709\u79d1\u5b66\u4f9d\u636e\u7684\u4e16\u754c\u4e2d\uff0c\u53d1\u73b0\u8eab\u4f53\u5982\u4f55\u81ea\u6211\u9632\u5fa1\u3002',
+        feat2Title: '\u638c\u63e1\u5e03\u5c14\u903b\u8f91',
+        feat2Desc: '\u901a\u8fc7\u52a8\u624b\u8c1c\u9898\u5b66\u4e60AND\u3001OR\u548cNOT\u95e8\u3002\u901a\u8fc7\u8fde\u63a5\u903b\u8f91\u7535\u8def\u89e3\u51b3\u771f\u5b9e\u6311\u6218\uff0c\u57f9\u517b\u8ba1\u7b97\u601d\u7ef4\u3002',
+        feat3Title: '\u62ef\u6551\u7ec6\u80de\uff01',
+        feat3Desc: '\u5f15\u5bfc\u673a\u5668\u4ebaByte\u5b8c\u6210\u4e00\u573a\u5145\u6ee1\u52a8\u4f5c\u7684\u5192\u9669\u3002\u667a\u80dc\u75c5\u6bd2\uff0c\u62db\u52df\u514d\u75ab\u76df\u53cb\uff0c\u4fdd\u62a4\u8eab\u4f53\u3002',
+        worldTitle: '\u8eab\u4f53\u5185\u90e8\u7684<br>\u4e16\u754c',
+        worldDesc: '\u7a7f\u8d8a\u9690\u85cf\u5728\u4eba\u4f53\u5185\u7684\u58ee\u4e3d\u666f\u89c2\u2014\u2014\u4ece\u8840\u6d41\u4e2d\u7684\u6df1\u7ea2\u5c71\u8c37\u5230\u9ad8\u8038\u7684\u7ec6\u80de\u5821\u5792\u3002',
+        loreLine: '\u514d\u75ab\u7cfb\u7edf\u7684\u6838\u5fc3\u6df1\u5904\uff0c\u6709\u4ec0\u4e48\u53e4\u8001\u7684\u4e1c\u897f\u5728\u82cf\u9192\u3002',
+        loreDesc: '\u4e00\u5ea7\u795e\u79d8\u7684\u80fd\u91cf\u91d1\u5b57\u5854\u51fa\u73b0\u4e86\uff0c\u6253\u7834\u4e86\u5fae\u5999\u7684\u5e73\u8861\u3002\u53ea\u6709Byte\u80fd\u5230\u8fbe\u90a3\u91cc\u3002\u53ea\u6709\u4f60\u80fd\u89e3\u5f00\u6321\u5728\u524d\u65b9\u7684\u8c1c\u9898\u3002',
+        castLabel: '\u8ba4\u8bc6\u89d2\u8272',
+        char1Name: '\u739b\u96c5\u535a\u58eb',
+        char1Role: '\u79d1\u5b66\u5bb6\u4e0e\u5411\u5bfc',
+        char1Bio: '\u4e00\u4f4d\u6770\u51fa\u7684\u514d\u75ab\u5b66\u5bb6\uff0c\u5c06\u4f60\u7f29\u5c0f\u4ee5\u63a2\u7d22\u5fae\u89c2\u4e16\u754c\u3002\u5979\u4ee5\u667a\u6167\u3001\u597d\u5947\u5fc3\u548c\u5076\u5c14\u7684\u51b7\u7b11\u8bdd\u5f15\u5bfc\u4f60\u7684\u65c5\u7a0b\u3002',
+        char2Name: '\u6559\u6388',
+        char2Role: '\u75af\u72c2\u79d1\u5b66\u5bb6\u4e0e\u53cd\u6d3e',
+        char2Bio: '\u4e00\u4e2a\u5934\u53d1\u84ec\u4e71\u7684\u602a\u4eba\uff0c\u5c06\u5e03\u5c14\u903b\u8f91\u6b66\u5668\u5316\u5bf9\u6297\u514d\u75ab\u7cfb\u7edf\u3002\u624d\u534e\u6a2a\u6ea2\u3001\u4e0d\u53ef\u9884\u6d4b\uff0c\u603b\u662f\u9886\u5148\u4e00\u6b65\u3002',
+        char3Name: 'Byte',
+        char3Role: '\u673a\u5668\u4eba\u4f19\u4f34',
+        char3Bio: '\u4f60\u5fe0\u5b9e\u7684\u7eff\u8272\u673a\u5668\u4eba\u4f19\u4f34\u3002Byte\u80fd\u4e0e\u903b\u8f91\u95e8\u5bf9\u63a5\u3001\u626b\u63cf\u75c5\u539f\u4f53\uff0c\u800c\u4e14\u53ea\u7528\u4e8c\u8fdb\u5236\u53cc\u5173\u8bed\u8bf4\u8bdd\u3002\u4e2a\u5934\u5c0f\uff0c\u80fd\u91cf\u5927\uff01',
+        ctaHeading: '\u62a2\u5148<br><span class="gold">\u4f53\u9a8c</span>',
+        ctaSub: '\u5fae\u89c2\u6df7\u6218\u4e0a\u7ebf\u65f6\u83b7\u5f97\u901a\u77e5\u3002\u65e9\u671f\u8ba2\u9605\u8005\u5c06\u83b7\u5f97\u72ec\u5bb6\u5e55\u540e\u5185\u5bb9\u548c\u62a2\u5148\u4f53\u9a8c\u8d44\u683c\u3002',
+        emailPlaceholder: '\u4f60\u7684\u90ae\u7bb1\u5730\u5740',
+        ctaBtn: '\u901a\u77e5\u6211',
+        ctaNote: '\u7edd\u65e0\u5783\u573e\u90ae\u4ef6\u3002\u968f\u65f6\u9000\u8ba2\u3002',
+        ctaSuccess: '\u4f60\u5df2\u52a0\u5165\u540d\u5355\u2014\u2014\u6211\u4eec\u4f1a\u4e0e\u4f60\u8054\u7cfb\u3002',
+        footBrand: '<strong>ModelIt K-12</strong> \u51fa\u54c1'
+      }
+    };
+
+    /* ═══════════ i18n ENGINE ═══════════ */
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.setAttribute('lang', lang);
+      const strings = T[lang];
+      if (!strings) return;
+
+      // Text content
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (strings[key] !== undefined) el.textContent = strings[key];
+      });
+
+      // HTML content (for elements with markup like <span>, <br>)
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.getAttribute('data-i18n-html');
+        if (strings[key] !== undefined) el.innerHTML = strings[key];
+      });
+
+      // Placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (strings[key] !== undefined) el.placeholder = strings[key];
+      });
+
+      // Update active button
+      document.querySelectorAll('.lang-nav button').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      // Remember choice
+      try { localStorage.setItem('mm-lang', lang); } catch(e) {}
+    }
+
+    // Language switcher clicks
+    document.querySelectorAll('.lang-nav button').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+    });
+
+    // Restore saved language
+    try {
+      const saved = localStorage.getItem('mm-lang');
+      if (saved && T[saved]) setLang(saved);
+    } catch(e) {}
+
+    /* ═══════════ Scroll Reveal ═══════════ */
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
 
-    /* ═══ Parallax on hero artwork (subtle) ═══ */
+    /* ═══════════ Hero Parallax ═══════════ */
     const heroImg = document.querySelector('.hero-artwork img');
     let ticking = false;
     window.addEventListener('scroll', () => {
@@ -841,7 +1078,7 @@
         requestAnimationFrame(() => {
           const y = window.scrollY;
           if (y < window.innerHeight) {
-            heroImg.style.transform = `scale(${1 + y * 0.0001}) translateY(${y * 0.25}px)`;
+            heroImg.style.transform = 'scale(' + (1 + y * 0.0001) + ') translateY(' + (y * 0.25) + 'px)';
           }
           ticking = false;
         });
@@ -849,13 +1086,13 @@
       }
     });
 
-    /* ═══ Form (Formsubmit.co AJAX) ═══ */
+    /* ═══════════ Form (Formsubmit.co AJAX) ═══════════ */
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const form = this;
       const btn = form.querySelector('button');
       const original = btn.textContent;
-      btn.textContent = 'Sending...';
+      btn.textContent = '...';
       btn.disabled = true;
 
       fetch('https://formsubmit.co/ajax/info@discoverycollective.com', {
@@ -868,7 +1105,7 @@
         })
       })
       .then(r => r.json())
-      .then(data => {
+      .then(() => {
         form.style.display = 'none';
         document.querySelector('.cta-note').style.display = 'none';
         document.getElementById('signupSuccess').style.display = 'block';
@@ -876,7 +1113,7 @@
       .catch(() => {
         btn.textContent = original;
         btn.disabled = false;
-        form.submit(); // fallback to regular POST
+        form.submit();
       });
     });
   </script>
