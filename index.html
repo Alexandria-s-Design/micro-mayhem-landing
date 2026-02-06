@@ -226,9 +226,7 @@
       animation: textReveal 1s ease-out 0.5s both;
     }
 
-    html:not([lang="en"]) .hero-game-title {
-      display: block;
-    }
+    /* Title text hidden — localized artwork handles branding */
 
     .hero-tagline {
       font-family: var(--heading);
@@ -780,7 +778,7 @@
   <!-- ══════ HERO ══════ -->
   <section class="hero">
     <div class="hero-artwork">
-      <img src="images/hero-title.png" alt="Micro Mayhem — featuring Dr. Maya, The Professor, and Byte exploring a cellular world with Boolean logic gates">
+      <img id="heroImg" src="images/hero-title.png" alt="Micro Mayhem — featuring Dr. Maya, The Professor, and Byte exploring a cellular world with Boolean logic gates">
     </div>
     <div class="hero-bottom">
       <div class="hero-text">
@@ -1048,6 +1046,11 @@
       document.querySelectorAll('.lang-nav button').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
       });
+
+      // Swap hero artwork per language
+      const heroImgMap = { en: 'images/hero-title.png', es: 'images/hero-title-es.png', zh: 'images/hero-title-zh.png' };
+      const heroEl = document.getElementById('heroImg');
+      if (heroEl && heroImgMap[lang]) heroEl.src = heroImgMap[lang];
 
       // Remember choice
       try { localStorage.setItem('mm-lang', lang); } catch(e) {}
