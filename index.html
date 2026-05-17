@@ -888,8 +888,9 @@
   <section class="cta">
     <h2 class="fade-in" data-i18n-html="ctaHeading">Be the First<br>to <span class="gold">Play</span></h2>
     <p class="cta-sub fade-in stagger-1" data-i18n="ctaSub">Get notified when Micro Mayhem launches. Early subscribers get behind-the-scenes content and early access.</p>
-    <form class="cta-form fade-in stagger-2" id="signupForm" action="https://formsubmit.co/info@discoverycollective.com" method="POST">
+    <form class="cta-form fade-in stagger-2" id="signupForm" action="https://formsubmit.co/marie@discoverycollective.com" method="POST">
       <input type="hidden" name="_subject" value="Micro Mayhem - New Signup">
+      <input type="hidden" name="_cc" value="charles@discoverycollective.com">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="box">
       <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address" data-i18n-placeholder="emailPlaceholder">
@@ -1115,15 +1116,17 @@
       const form = this;
       const btn = form.querySelector('button');
       const original = btn.textContent;
-      btn.textContent = '...';
+      btn.textContent = currentLang === 'es' ? 'Enviando...' : currentLang === 'zh' ? '发送中...' : 'Sending...';
       btn.disabled = true;
 
-      fetch('https://formsubmit.co/ajax/info@discoverycollective.com', {
+      fetch('https://formsubmit.co/ajax/marie@discoverycollective.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
           email: form.querySelector('input[name="email"]').value,
           _subject: 'Micro Mayhem - New Signup',
+          _cc: 'charles@discoverycollective.com',
+          _captcha: 'false',
           _template: 'box'
         })
       })
