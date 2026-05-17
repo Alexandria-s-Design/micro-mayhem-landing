@@ -9,3 +9,14 @@
 **Status**: ✅ Pushed
 
 ---
+### 2026-05-17 13:47:47 — Codex (GPT)
+**Task**: Test the live Micro Mayhem signup form three times and confirm receipt with gogcli
+**Changes**:
+- No website code changes.
+- Submitted the live form three times with `charlesmartinedd@gmail.com`; each request returned HTTP 200 from FormSubmit and showed `SENT`.
+- Searched both `marie@discoverycollective.com` and `charles@discoverycollective.com` with gogcli; no signup notifications were found.
+
+**Commit**: `docs: record signup delivery test`
+**Status**: ❌ Failed: FormSubmit accepted submissions but delivery was not confirmed in either Discovery Collective inbox
+
+---
