@@ -1115,31 +1115,49 @@
       e.preventDefault();
       const form = this;
       const btn = form.querySelector('button');
+      const email = form.querySelector('input[name="email"]');
       const original = btn.textContent;
-      btn.textContent = currentLang === 'es' ? 'Enviando...' : currentLang === 'zh' ? '发送中...' : 'Sending...';
+      const sentText = currentLang === 'es' ? 'Enviado' : currentLang === 'zh' ? '已发送' : 'Sent';
+      const errorText = currentLang === 'es' ? 'Intenta otra vez' : currentLang === 'zh' ? '请重试' : 'Try Again';
+
+      btn.textContent = sentText;
       btn.disabled = true;
+      email.disabled = true;
+      document.querySelector('.cta-note').style.display = 'none';
+      document.getElementById('signupSuccess').style.display = 'block';
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
 
       fetch('https://formsubmit.co/ajax/marie@discoverycollective.com', {
         method: 'POST',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          email: form.querySelector('input[name="email"]').value,
+          email: email.value,
           _subject: 'Micro Mayhem - New Signup',
           _cc: 'charles@discoverycollective.com',
           _captcha: 'false',
           _template: 'box'
         })
       })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Signup failed');
+        return r.json();
+      })
       .then(() => {
-        form.style.display = 'none';
-        document.querySelector('.cta-note').style.display = 'none';
+        btn.textContent = sentText;
         document.getElementById('signupSuccess').style.display = 'block';
       })
       .catch(() => {
-        btn.textContent = original;
+        btn.textContent = errorText;
         btn.disabled = false;
+        email.disabled = false;
+        document.getElementById('signupSuccess').style.display = 'none';
         form.submit();
+      })
+      .finally(() => {
+        clearTimeout(timeout);
       });
     });
   </script>
