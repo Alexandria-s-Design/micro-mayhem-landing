@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Micro Mayhem</title>
+  <meta name="description" content="Privacy Policy for Micro Mayhem, an educational game by Discovery Collective. Built for students in grades 5-8 and compliant with COPPA and Google Play's Families policy.">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0e1a;
+      --bg-mid: #0d1b2a;
+      --cyan: #00f0ff;
+      --teal: #00d4aa;
+      --purple: #7c3aed;
+      --green: #4ade80;
+      --gold: #ffc857;
+      --white: #eaf1ff;
+      --dim: #5e6a7e;
+      --faint: rgba(255,255,255,0.06);
+      --heading: 'Montserrat', sans-serif;
+      --body: 'Open Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--body);
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124,58,237,0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(0,212,170,0.10), transparent);
+      background-attachment: fixed;
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: clamp(40px, 8vw, 96px) clamp(22px, 5vw, 48px) 80px;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--teal);
+      text-decoration: none;
+      font-family: var(--heading);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      transition: color 0.2s ease;
+    }
+    .back:hover { color: var(--cyan); }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(255,200,87,0.35);
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-family: var(--heading);
+      font-weight: 900;
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      background: linear-gradient(120deg, var(--cyan), var(--teal) 60%, var(--green));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .updated {
+      color: var(--dim);
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .intro {
+      color: rgba(234,241,255,0.82);
+      font-size: 1.05rem;
+      border-left: 3px solid var(--teal);
+      padding-left: 20px;
+      margin: 28px 0 44px;
+    }
+
+    h2 {
+      font-family: var(--heading);
+      font-weight: 800;
+      font-size: clamp(1.15rem, 3vw, 1.5rem);
+      color: var(--white);
+      margin: 46px 0 14px;
+      padding-top: 8px;
+    }
+
+    h2 .num {
+      color: var(--teal);
+      margin-right: 10px;
+      font-weight: 900;
+    }
+
+    h3 {
+      font-family: var(--heading);
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: var(--cyan);
+      margin: 26px 0 8px;
+    }
+
+    p { margin-bottom: 16px; color: rgba(234,241,255,0.85); }
+
+    ul { margin: 0 0 18px 4px; padding-left: 22px; }
+    li { margin-bottom: 10px; color: rgba(234,241,255,0.85); }
+    li::marker { color: var(--teal); }
+
+    strong { color: var(--white); font-weight: 600; }
+
+    a { color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(0,212,170,0.3); transition: color 0.2s; }
+    a:hover { color: var(--cyan); }
+
+    .callout {
+      background: rgba(0,212,170,0.06);
+      border: 1px solid rgba(0,212,170,0.18);
+      border-radius: 14px;
+      padding: 22px 26px;
+      margin: 30px 0;
+    }
+    .callout h3 { margin-top: 0; }
+
+    .contact-card {
+      background: var(--bg-mid);
+      border: 1px solid var(--faint);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin-top: 26px;
+    }
+    .contact-card p { margin-bottom: 6px; }
+    .contact-card .org { font-family: var(--heading); font-weight: 700; color: var(--white); font-size: 1.05rem; }
+
+    footer {
+      border-top: 1px solid var(--faint);
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 30px clamp(22px, 5vw, 48px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .foot-brand { font-family: var(--heading); font-size: 0.72rem; font-weight: 600; color: var(--dim); letter-spacing: 0.5px; }
+    .foot-brand strong { color: var(--teal); }
+    .foot-copy { font-size: 0.68rem; color: var(--dim); opacity: 0.6; }
+
+    @media (max-width: 640px) {
+      .intro { font-size: 0.98rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="index.html">&larr; Back to Micro Mayhem</a>
+
+    <span class="badge">Privacy Policy</span>
+    <h1>Micro Mayhem Privacy Policy</h1>
+    <p class="updated">Last updated: June 9, 2026</p>
+
+    <p class="intro">
+      Micro Mayhem is an educational game made for students, families, and classrooms. We built it to teach
+      immunology through play — not to collect personal information. This policy explains, in plain language,
+      what we do and do not collect, and how we protect the children who play.
+    </p>
+
+    <p>
+      This Privacy Policy describes how <strong>Discovery Collective</strong> ("Discovery Collective," "we,"
+      "us," or "our") handles information in connection with the <strong>Micro Mayhem</strong> game and
+      related websites and apps (collectively, the "Service"). Micro Mayhem is developed for Discovery
+      Collective by Filament Games and is part of the Cell Collective family of science-learning tools.
+    </p>
+
+    <div class="callout">
+      <h3>The short version</h3>
+      <ul>
+        <li>Micro Mayhem does <strong>not</strong> require an account, login, or sign-up to play.</li>
+        <li>We do <strong>not</strong> ask players for their name, email, address, phone number, or photo.</li>
+        <li>We do <strong>not</strong> show third-party advertising.</li>
+        <li>We do <strong>not</strong> sell or rent any personal information — ever.</li>
+        <li>The game is designed for children and complies with COPPA and Google Play's Families policy.</li>
+      </ul>
+    </div>
+
+    <h2><span class="num">1.</span>Who this game is for</h2>
+    <p>
+      Micro Mayhem is designed for learners in approximately <strong>grades 5–8</strong> and may be used by
+      children under the age of 13. Because the game is intended for children, we follow the U.S. Children's
+      Online Privacy Protection Act ("COPPA"), Google Play's Families ("Designed for Families") requirements,
+      and Apple's Kids Category guidelines. We have designed the Service to be safe for children to use without
+      providing personal information.
+    </p>
+
+    <h2><span class="num">2.</span>Information we do not collect</h2>
+    <p>
+      We have intentionally built Micro Mayhem to minimize data collection. The Service does <strong>not</strong>
+      collect any of the following:
+    </p>
+    <ul>
+      <li>Names, email addresses, mailing addresses, or phone numbers</li>
+      <li>Photos, videos, voice recordings, or audio from the device microphone</li>
+      <li>Precise geolocation (we do not track where players are)</li>
+      <li>Contacts, calendars, or other content on the device</li>
+      <li>Persistent identifiers used for advertising or cross-app tracking</li>
+    </ul>
+    <p>
+      Micro Mayhem does not include social features, chat, user-to-user messaging, or the ability to share
+      content with other users.
+    </p>
+
+    <h2><span class="num">3.</span>Information the game does use</h2>
+    <h3>On-device game data</h3>
+    <p>
+      To let a player continue where they left off, the game may store progress information (such as the current
+      level, score, or settings) <strong>locally on the device</strong>. This information stays on the device and
+      is not transmitted to us in a way that identifies the player.
+    </p>
+    <h3>Limited, non-identifying technical data</h3>
+    <p>
+      Like most websites and apps, our hosting providers and app stores may automatically process limited
+      technical information — such as device type, operating system, general region (country-level), and basic
+      crash or performance logs — to keep the Service running, secure, and stable. This information is used only
+      to operate and improve the game and is not used to build advertising profiles or to identify individual
+      children.
+    </p>
+
+    <h2><span class="num">4.</span>How we use information</h2>
+    <p>We use the limited information described above only to:</p>
+    <ul>
+      <li>Provide, maintain, and improve the game and its educational content</li>
+      <li>Save and restore a player's progress on their own device</li>
+      <li>Diagnose technical problems, fix bugs, and keep the Service secure</li>
+      <li>Understand, in aggregate, how the game performs across devices</li>
+    </ul>
+
+    <h2><span class="num">5.</span>No advertising and no sale of data</h2>
+    <p>
+      Micro Mayhem does not display third-party advertisements and does not use advertising networks. We do not
+      sell, rent, or trade personal information, and we do not use children's information for behavioral
+      advertising or marketing.
+    </p>
+
+    <h2><span class="num">6.</span>Schools and classroom use</h2>
+    <p>
+      When Micro Mayhem is used in a school or district setting, the school often acts on behalf of parents in
+      authorizing student use of educational tools, consistent with COPPA and FERPA. Because the game does not
+      collect personal information from students, no student records are created or shared with us through normal
+      gameplay. Schools participating in a research pilot are covered by separate consent and research-ethics
+      (IRB) documents provided directly to the school and to parents or guardians.
+    </p>
+
+    <h2><span class="num">7.</span>Third-party services</h2>
+    <p>
+      The game is delivered through standard hosting and app-distribution platforms (for example, Google Play
+      and the Apple App Store) and may run on web-game technology provided by Unity. These providers may process
+      limited technical data under their own privacy policies in order to deliver and run the app. We do not
+      integrate third-party advertising or analytics SDKs that track children across apps.
+    </p>
+
+    <h2><span class="num">8.</span>Data retention and security</h2>
+    <p>
+      Because we do not collect personal information from players, we do not maintain personal profiles of
+      children. Any limited technical data processed by our providers is retained only as long as needed to
+      operate the Service and is protected using reasonable administrative, technical, and physical safeguards.
+    </p>
+
+    <h2><span class="num">9.</span>Parental rights</h2>
+    <p>
+      Parents and guardians have the right to review what information, if any, is associated with their child,
+      to request deletion, and to refuse further collection or use. Because Micro Mayhem is designed not to
+      collect personal information from children, there is typically nothing to review or delete. If you have a
+      question or a specific request, please contact us using the details below and we will respond promptly.
+    </p>
+
+    <h2><span class="num">10.</span>Changes to this policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time. When we do, we will revise the "Last updated" date at
+      the top of this page. If we make material changes that affect children's information, we will take
+      appropriate steps to provide notice.
+    </p>
+
+    <h2><span class="num">11.</span>Contact us</h2>
+    <p>If you have any questions about this Privacy Policy or our privacy practices, please contact us:</p>
+    <div class="contact-card">
+      <p class="org">Discovery Collective</p>
+      <p>Email: <a href="mailto:info@discoverycollective.com">info@discoverycollective.com</a></p>
+      <p>Web: <a href="https://micro-mayhem.com">micro-mayhem.com</a></p>
+    </div>
+  </div>
+
+  <footer>
+    <p class="foot-brand">A <strong>Discovery Collective</strong> Game</p>
+    <p class="foot-copy">&copy; 2026 ModelIt K-12</p>
+  </footer>
+</body>
+</html>
